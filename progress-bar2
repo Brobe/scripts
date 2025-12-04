@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+BAR_CHAR='|'
+EMPTY_CHAR=' '
+
+fatal() {
+    echo '[FATAL]' "$@" >&2
+    exit 1
+}
+
+progress-bar() {
+    local current=$1
+    local len=$2
+
+    local perc_done=$((current * 100 / len))
+    local suffix=" $current/$len ($perc_done%)"
+
+    local length=$((COLUMNS - ${#suffix} - 2))
+    local num_bars=$((perc_done * length / 100))
+
+    local i
+    local s='['
+
+    for ((i = 0; i < num_bars; i++)); do
+        s+=$BAR_CHAR
+    done
+    for ((i = num_bars; i < length; i++)); do
+        s+=$EMPTY_CHAR
+    done
+    s+=']'
+    s+=$suffix
+    printf '\e7' # Save the cursor location
+    printf '\e[%d;%dH' "$LINES" 0 # Move cursor to the bottom line
+    printf '\e[0K' # Clear the line
+    printf '%s' "$s" # Print the progress bar
+    printf '\e8' # Restore the cursor location
+}
+
+init-term() {
+    printf '\n' # Ensure we have space for the scrollbar
+    printf '\e7' # Save the cursor location
+    printf '\e[%d;%dr' 0 "$((LINES - 1))" # Set the scrollable region (margin)
+    printf '\e8' # Restore the cursor location
+    printf '\e[1A' # Move cursor up
+}
+
+# dessa kanske måste va i olika hjälp .sh filer?
+deinit-term() {
+    printf '\e7' # Save the cursor location
+    printf '\e[%d;%dr' 0 "$LINES" # Reset the scrollable region (margin)
+    printf '\e[%d;%dH' "$LINES" 0 # Move cursor to the bottom line
+    printf '\e[0K' # Clear the line
+    printf '\e8' # Restore the cursor location
+}
+
+init-shell() {
+    (:)
+}
+
+init-shell
+progress-bar "$@"
+

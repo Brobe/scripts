@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+fatal() {
+    echo '[!] ' "$@" >&2
+    exit 1
+}
+
+progress-bar() {
+    (:)
+    local BAR_CHAR='|'
+    local EMPTY_CHAR=' '
+
+    local current=$1
+    local len=$2
+
+    local perc_done=$(( current * 100 / len))
+    local suffix=" $current/$len ($perc_done)"
+
+    local length=$((COLUMNS - ${#suffix} - 2))
+    local num_bars=$((perc_done * length / 100))
+
+    local i
+    local s='['
+
+    for ((i = 0; i < num_bars; i++)); do
+        s+=$BAR_CHAR
+    done
+    for ((i = num_bars; i < length; i++)); do
+        s+=$EMPTY_CHAR
+    done
+    s+=']'
+    s+=$suffix
+    echo -ne "\r$s"
+
+}
+
+error-text() {
+    local text="$@"
+    echo -e "\r[*] $text\033[K"
+}
+
+main() {
+    local OPTARG OPTIND opt
+    while getopts 'p:e:' opt; do
+        case "$opt" in
+            p) progress-bar $OPTARG;;
+            e) error-text $OPTARG;;
+            *) fatal $OPTARG;;
+        esac
+    done
+}
+
+main "$@"
+
+#curr=0
+#for ((curr = 0; curr < 101; curr++)); do
+#    if ((curr == 20)); then
+#        error-text "curr is $curr"
+#    fi
+#    progress-bar $curr 100
+#    sleep 0.1
+#done
+
+#progress-bar "$@"
