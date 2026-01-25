@@ -16,7 +16,7 @@ done
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(printf '%s\n' "${combined_list[@]}" | fzf)
+    selected=$(printf '%s\n' "${combined_list[@]}" | fzf --height=100)
     #selected=$(find "${search_dirs[@]}" -maxdepth 1 -type d | fzf)
     #selected=$(find "${search_dirs[@]}" -mindepth 1 -maxdepth 1 -type d | fzf)
 fi

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+lang=$(fzf < ~/scripts/learnXinYminutes/all_languages) || exit
+curl -s https://raw.githubusercontent.com/adambard/learnxinyminutes-docs/master/$lang.md | glow -

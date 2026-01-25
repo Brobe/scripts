@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Directory where wallpapers are stored
 WALL_DIR="$HOME/images/wallpapers"
@@ -7,5 +7,5 @@ WALL_DIR="$HOME/images/wallpapers"
 WALL=$(find "$WALL_DIR" -type f \( -iname "*.jpg" -o -iname "*.png" \) | shuf -n 1)
 
 # Use hyprctl reload to set the wallpaper
-hyprctl hyprpaper reload ,"$WALL"
+swww img "$WALL" --transition-type fade --transition-step 255 
 
