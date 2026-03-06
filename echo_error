@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# Echoing with [!] and red text
+echo -e "\033[31m[!] $*\033[0m";
+

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# Echoing with [-] and yellow text
+echo -e "\033[33m[-] $*\033[0m";
+
