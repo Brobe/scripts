@@ -16,7 +16,22 @@ done
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(printf '%s\n' "${combined_list[@]}" | fzf --height=100)
+    selected=$(printf '%s\n' "${combined_list[@]}" | fzf --height=100 --preview '
+    item={}
+    if [[ $item == session:* ]]; then
+        sess=$(echo {} | sed "s/^session: //")
+        tmux capture-pane -ep -t "$sess" -S -40
+    else
+        if [ -d "$item/.git" ]; then
+            echo_ok " ===== Status ====="
+            git -C "$item" -c color.status=always status
+            echo_info " ===== Log    ====="
+            git -C "$item" log -n 5 --oneline --color=always
+        fi
+        echo_ok " ===== ls     ====="
+        ls -la "$item" --color=always
+    fi
+    ')
     #selected=$(find "${search_dirs[@]}" -maxdepth 1 -type d | fzf)
     #selected=$(find "${search_dirs[@]}" -mindepth 1 -maxdepth 1 -type d | fzf)
 fi
