@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+sink="@DEFAULT_AUDIO_SINK@"
+vol=$(wpctl get-volume "$sink" | awk '{print $2}')
+round_vol=$(awk -v v="$vol" 'BEGIN {print (int(v*20))/20}')
+dec_vol=$(awk -v v="$vol" 'BEGIN {print (int(v*20)-1)/20}')
+
+new_vol=$(awk -v v="$vol" -v r="$round_vol" -v d="$dec_vol" 'BEGIN {print (r < v) ? r : d}')
+
+wpctl set-volume -l 1.5 "$sink" "$new_vol"
