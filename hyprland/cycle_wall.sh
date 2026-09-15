@@ -7,5 +7,5 @@ WALL_DIR="$HOME/images/wallpapers"
 WALL=$(find "$WALL_DIR" -type f \( -iname "*.jpg" -o -iname "*.png" \) | shuf -n 1)
 
 # Use hyprctl reload to set the wallpaper
-swww img "$WALL" --transition-type fade --transition-step 255 
+awww img "$WALL" --transition-type fade --transition-step 255 
 
