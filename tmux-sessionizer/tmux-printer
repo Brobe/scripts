@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+
+# usage tmux-printer $(tmux-session name)
+tmux capture-pane -ep -t $1 -S -40
