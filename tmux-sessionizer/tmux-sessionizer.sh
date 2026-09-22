@@ -29,7 +29,7 @@ else
             git -C "$item" log -n 5 --oneline --color=always
         fi
         echo_ok " ===== ls     ====="
-        ls -la "$item" --color=always
+        ls -a "$item" --color=always
     fi
     ')
     #selected=$(find "${search_dirs[@]}" -maxdepth 1 -type d | fzf)
