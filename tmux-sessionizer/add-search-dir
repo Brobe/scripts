@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+new_search_dir=$1
+echo "$new_search_dir" >> "$HOME/scripts/tmux-sessionizer/search-dirs"
+echo_ok "$new_search_dir has been added"
