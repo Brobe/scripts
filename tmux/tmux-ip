@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+ip=$(ip route get 1.1.1.1 | awk '{printf $7; exit}')
+printf " $ip"
+

@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+volume=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
+percent=$(awk '{printf "%.0f", $2 * 100}' <<< "$volume")
+
+if [[ "$volume" == *"[MUTED]"* ]]; then
+    printf ' %d%%' "$percent"
+    exit
+fi
+
+if (( percent <= 30 )); then
+    printf ' %d%%' "$percent"
+elif (( percent <= 65 )); then
+    printf ' %d%%' "$percent"
+else
+    printf ' %d%%' "$percent"
+fi
+
