@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+for battery in /sys/class/power_supply/*; do
+    [[ -f "$battery/capacity" ]] || continue
+    [[ "$(cat "$battery/type")" == "Battery" ]] || continue
+
+    printf '󰁹 %s%% | ' "$(cat "$battery/capacity")"
+    exit 0
+done
