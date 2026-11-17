@@ -25,5 +25,6 @@ NEXT_INDEX=$(( (CURRENT_INDEX + 1) % NUM_MONITORS ))
 NEXT_MONITOR=${MONITORS[$NEXT_INDEX]}
 
 # Move the workspace
-hyprctl dispatch moveworkspacetomonitor "$WS_ID" "$NEXT_MONITOR"
+#hyprctl dispatch moveworkspacetomonitor "$WS_ID" "$NEXT_MONITOR" # <-- works for old .config file
+hyprctl dispatch "hl.dsp.workspace.move({ workspace = $WS_ID, monitor = '$NEXT_MONITOR' })"
 
